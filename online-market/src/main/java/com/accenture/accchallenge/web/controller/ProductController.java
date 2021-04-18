@@ -1,7 +1,7 @@
 package com.accenture.accchallenge.web.controller;
 
-import com.accenture.accchallenge.persistence.ProductoRepository;
-import com.accenture.accchallenge.persistence.entity.Producto;
+import com.accenture.accchallenge.persistence.ProductRepository;
+import com.accenture.accchallenge.persistence.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,18 +12,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-public class ProductoController {
+public class ProductController {
 
     @Autowired
-    private ProductoRepository productoRepository;
+    private ProductRepository productRepository;
 
     @GetMapping
-    public Producto getProductoById(@RequestParam(value = "id") int id){
-        return productoRepository.getProductoById(id);
+    public Product getProductById(@RequestParam(value = "id") int id){
+        return productRepository.getProductById(id);
     }
 
     @GetMapping("/all")
-    public List<Producto> getAllProducts(){
-        return productoRepository.getAll();
+    public List<Product> getAllProducts(){
+        return productRepository.getAll();
     }
 }
