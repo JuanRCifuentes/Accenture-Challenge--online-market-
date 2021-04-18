@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "c25978b6-5006-443d-927c-da6f74dad39f",
+		"name": "Accenture Challenge (Online Market)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/acc-dev/api/products/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"acc-dev",
+						"api",
+						"products",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/acc-dev/api/products?id=0",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"acc-dev",
+						"api",
+						"products"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/acc-dev/api/orders/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"acc-dev",
+						"api",
+						"orders",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Order",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[1,1,1,1,1,1,1,1,1]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/acc-dev/api/orders/update?id=0",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"acc-dev",
+						"api",
+						"orders",
+						"update"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
