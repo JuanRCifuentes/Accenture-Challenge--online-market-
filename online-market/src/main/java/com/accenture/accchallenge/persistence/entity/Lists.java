@@ -18,9 +18,9 @@ public class Lists {
 
     public void createProducts(){
         productsList.add(new Product(0, "Hamburguesa", 20000));
-        productsList.add(new Product(3, "Pizza", 50000));
+        productsList.add(new Product(1, "Pizza", 50000));
         productsList.add(new Product(2, "Pasta", 25000));
-        productsList.add(new Product(1, "Poke", 35000));
+        productsList.add(new Product(3, "Poke", 35000));
         productsList.add(new Product(4, "Sushi", 25000));
     }
 
@@ -30,7 +30,7 @@ public class Lists {
         int numberOfOrders = rand.nextInt(5)+ 5;
 
         List<Product> tempList = Arrays.asList(productsList.get(0), productsList.get(1));
-        ordersList.add(new Order(0, tempList, LocalDateTime.now().minusHours(3)));
+        ordersList.add(new Order(0, tempList, LocalDateTime.now()));
 
         for(int i = 1; i<numberOfOrders; i++){
 
