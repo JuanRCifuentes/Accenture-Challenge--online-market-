@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
@@ -19,27 +18,32 @@ public class Pedido {
     private List<Producto> productos;
     private LocalDateTime fechaCreacion;
     private BigDecimal subtotal;
-    private BigDecimal total;
     private BigDecimal costoDomicilio;
+    private BigDecimal total;
 
-    public Pedido(List<String> pProductos, List<Producto> listaProductos){
-        pedidoId = 1;
-        addProductos(pProductos, listaProductos);
-        subtotal = new BigDecimal("10");
-        costoDomicilio = new BigDecimal("5");
-        total = subtotal.add(costoDomicilio);
-        fechaCreacion = LocalDateTime.now();
+    public Pedido(Integer id, List<Producto> pProductos, LocalDateTime pFecha){
+        pedidoId = id;
+        productos = pProductos;
+        calcularSubtotal();
+        calcularDomicilio();
+        calcularTotal();
+        fechaCreacion = pFecha;
     }
 
 //    ----------------------- METHODS -----------------------
 
-    public void addProductos(List<String> pProductos, List<Producto> listaProductos){
-        productos = new ArrayList<Producto>();
+    public void calcularTotal(){
+        total = subtotal.add(costoDomicilio);
+    }
 
-        for (String nombreProducto: pProductos) {
-            System.out.println("entró al for");
-            Producto temp = productoRepository.getProductoByNombre(nombreProducto);
-            productos.add(temp);
+    public void calcularDomicilio(){
+        costoDomicilio = valorNoDomicilio.compareTo(subtotal)==1 ? new BigDecimal("5000") : new BigDecimal("0");
+    }
+
+    public void calcularSubtotal(){
+        subtotal = new BigDecimal("0");
+        for (Producto producto: productos) {
+            subtotal = subtotal.add(producto.getPrecio());
         }
     }
 
@@ -61,6 +65,10 @@ public class Pedido {
         return productos;
     }
 
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
+
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
@@ -77,19 +85,19 @@ public class Pedido {
         this.subtotal = subtotal;
     }
 
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
     public BigDecimal getCostoDomicilio() {
         return costoDomicilio;
     }
 
     public void setCostoDomicilio(BigDecimal costoDomicilio) {
         this.costoDomicilio = costoDomicilio;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 }

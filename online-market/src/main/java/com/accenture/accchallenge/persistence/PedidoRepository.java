@@ -1,11 +1,15 @@
 package com.accenture.accchallenge.persistence;
 
+import ch.qos.logback.core.rolling.helper.PeriodicityType;
 import com.accenture.accchallenge.AccChallengeApplication;
 import com.accenture.accchallenge.persistence.entity.Pedido;
 import com.accenture.accchallenge.persistence.entity.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +23,41 @@ public class PedidoRepository {
         return AccChallengeApplication.mundo.getPedidos();
     }
 
-    public List<Producto> addProductos(List<String> pProductos){
-        List <Producto> productos = new ArrayList<Producto>();
+    public Pedido actualizarPedido(List<Integer> productos, int pedidoId){
 
-        for (String nombreProducto: pProductos) {
-            System.out.println("entró al for");
-            Producto temp = productoRepository.getProductoByNombre(nombreProducto);
-            productos.add(temp);
+        Pedido pedido = getPedidoById(pedidoId);
+        List<Producto> productosNuevos = productoRepository.getProductosById(productos);
+        Pedido pedidoTemp = new Pedido(1, productosNuevos, LocalDateTime.now());
+
+        Boolean aumentoPrecio = pedidoTemp.getSubtotal().compareTo(pedido.getSubtotal())==1 ||
+                pedidoTemp.getSubtotal().compareTo(pedido.getSubtotal())==0;
+
+        long hours = ChronoUnit.HOURS.between(pedido.getFechaCreacion(), pedidoTemp.getFechaCreacion());
+        Boolean esReciente = hours < 5;
+
+        if(aumentoPrecio && esReciente){
+            pedido.setProductos(productosNuevos);
+            pedido.calcularSubtotal();
+            pedido.calcularDomicilio();
+            pedido.calcularTotal();
+            return pedido;
+
+        } else {
+            return null;
         }
-        return productos;
+
+    }
+
+    public Pedido getPedidoById(int pedidoId){
+
+        List<Pedido> pedidos = AccChallengeApplication.mundo.getPedidos();
+
+        for (Pedido pedido : pedidos) {
+            if (pedido.getPedidoId() == pedidoId) {
+                return pedido;
+            }
+        }
+        return null;
     }
 
 }

@@ -18,12 +18,12 @@ public class ProductoController {
     private ProductoRepository productoRepository;
 
     @GetMapping
-    public int getProducto(@RequestParam(value = "nombre") String nom){
-        return productoRepository.getProductoByNombre(nom).getProductoId();
+    public Producto getProductoById(@RequestParam(value = "id") int id){
+        return productoRepository.getProductoById(id);
     }
 
     @GetMapping("/all")
-    public List<Producto> getProducto(){
+    public List<Producto> getAllProducts(){
         return productoRepository.getAll();
     }
 }
