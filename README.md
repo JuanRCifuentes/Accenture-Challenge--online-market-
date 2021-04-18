@@ -8,6 +8,7 @@ Capas:
 2. Web: Controladores API REST
 3. Persistencia: Repositorios y entities
 
+El puerto en el que se puede ver el API es `8090.
 
 Documentación hecha con Swagger en `localhost:8090/acc-dev/api/swagger-ui.html`
 
