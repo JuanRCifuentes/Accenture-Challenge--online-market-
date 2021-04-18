@@ -1,21 +1,29 @@
 package com.accenture.accchallenge.persistence;
 
+import com.accenture.accchallenge.persistence.entity.Listas;
+import com.accenture.accchallenge.persistence.entity.Pedido;
 import com.accenture.accchallenge.persistence.entity.Producto;
+
+import java.util.List;
 
 public class Mundo {
 
-    private String nombre = "Juan";
-    private Producto producto;
+    private List<Producto> productos;
+    private List<Pedido> pedidos;
 
     public Mundo(){
-        producto = new Producto(nombre);
+
+        Listas listas = new Listas();
+
+        productos = listas.getListaProductos();
+        pedidos = listas.getListaPedidos();
     }
 
-    public Producto getProducto() {
-        return producto;
+    public List<Producto> getProductos() {
+        return productos;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
 }
