@@ -1,6 +1,6 @@
 package com.accenture.accchallenge.persistence.entity;
 
-import com.accenture.accchallenge.persistence.ProductRepository;
+import com.accenture.accchallenge.persistence.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ import java.util.List;
 public class Order {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepo productRepo;
 
     final BigDecimal priceForNoShipping = new BigDecimal("100000");
 

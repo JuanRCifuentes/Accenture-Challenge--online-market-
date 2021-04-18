@@ -1,6 +1,7 @@
 package com.accenture.accchallenge.persistence;
 
 import com.accenture.accchallenge.AccChallengeApplication;
+import com.accenture.accchallenge.domain.repository.OrderRepository;
 import com.accenture.accchallenge.persistence.entity.Order;
 import com.accenture.accchallenge.persistence.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,29 +10,40 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Repository
-public class OrderRepository {
+public class OrderRepo implements OrderRepository {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepo productRepo;
 
-    public List<Order> getAll(){
+    @Override
+    public List<Order> getAllOrders(){
         return AccChallengeApplication.world.getOrders();
     }
 
-    public Order updateOrder(List<Integer> products, int orderId){
-        Order order = getOrderById(orderId);
-        List<Product> newProducts = productRepository.getProductsById(products);
+    @Override
+    public Optional<Order> updateOrder(List<Integer> products, int orderId){
+        Order order = null;
+
+        if(Objects.isNull(getOrderById(orderId))){
+            return Optional.ofNullable(order);
+        } else {
+            order = getOrderById(orderId);
+        }
+
+        List<Product> newProducts = productRepo.getProductsById(products);
 
         if(orderPriceIncreased(newProducts, order) && orderIsRecent(order)){
             order.setProducts(newProducts);
             order.calculateSubtotal();
             order.calculateShipping();
             order.calculateTotal();
-            return order;
+            return Optional.of(order);
         } else {
-            return null;
+            return Optional.of(order);
         }
     }
 
@@ -48,14 +60,16 @@ public class OrderRepository {
         return priceIncreased;
     }
 
+    @Override
     public Order getOrderById(int orderId){
-        List<Order> orders = getAll();
-        for (Order order : orders) {
-            if (order.getOrderId() == orderId) {
-                return order;
+        List<Order> orders = getAllOrders();
+        Order order = null;
+        for (Order orderTemp : orders) {
+            if (orderTemp.getOrderId() == orderId) {
+                order = orderTemp;
             }
         }
-        return null;
+        return order;
     }
 
 }

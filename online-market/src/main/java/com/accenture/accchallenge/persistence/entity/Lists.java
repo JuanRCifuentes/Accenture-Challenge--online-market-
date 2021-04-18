@@ -41,7 +41,7 @@ public class Lists {
                 int productIndex = rand.nextInt(productsList.size());
                 tempList.add(productsList.get(productIndex));
             }
-            ordersList.add(new Order(i, tempList, LocalDateTime.now().minusHours(i*2)));
+            ordersList.add(new Order(i, tempList, LocalDateTime.now().minusHours(i)));
         }
 
     }
