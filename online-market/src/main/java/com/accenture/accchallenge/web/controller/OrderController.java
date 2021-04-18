@@ -39,9 +39,8 @@ public class OrderController {
         Order order = orderService.updateOrder(products, orderId).map(tempO -> tempO).orElse(null);
         if (Objects.isNull(order)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (order.equals(tempOrder)){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } else {
+            return new ResponseEntity<>(order, HttpStatus.OK);
         }
-        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 }
