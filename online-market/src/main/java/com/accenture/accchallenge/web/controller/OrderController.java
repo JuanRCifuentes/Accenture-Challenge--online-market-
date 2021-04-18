@@ -32,7 +32,7 @@ public class OrderController {
     @ApiOperation("Updates an order with an ID and a productID array")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 400, message = "Order NOT Found")
+            @ApiResponse(code = 400, message = "Order not Found")
     })
     public ResponseEntity<Order> updateOrder(@RequestBody List<Integer> products, @ApiParam(value = "The id of the order", required = true, example = "0") @RequestParam(value = "id") int orderId){
         Order order = orderService.updateOrder(products, orderId).map(tempOrder -> tempOrder).orElse(null);
