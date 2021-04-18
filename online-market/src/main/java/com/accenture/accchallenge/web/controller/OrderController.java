@@ -35,8 +35,8 @@ public class OrderController {
             @ApiResponse(code = 400, message = "Order not Found")
     })
     public ResponseEntity<Order> updateOrder(@RequestBody List<Integer> products, @ApiParam(value = "The id of the order", required = true, example = "0") @RequestParam(value = "id") int orderId){
-        Order order = orderService.updateOrder(products, orderId).map(tempOrder -> tempOrder).orElse(null);
         Order tempOrder = orderService.getOrderById(orderId);
+        Order order = orderService.updateOrder(products, orderId).map(tempO -> tempO).orElse(null);
         if (Objects.isNull(order)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else if (order.equals(tempOrder)){
