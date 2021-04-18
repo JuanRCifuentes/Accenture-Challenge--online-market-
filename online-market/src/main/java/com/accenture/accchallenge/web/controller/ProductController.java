@@ -27,7 +27,7 @@ public class ProductController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Product NOT Found")
     })
-    public ResponseEntity<Product> getProductById(@RequestBody List<Integer> products, @ApiParam(value = "The id of the product", required = true, example = "0") @RequestParam(value = "id") int id){
+    public ResponseEntity<Product> getProductById(@ApiParam(value = "The id of the product", required = true, example = "0") @RequestParam(value = "id") int id){
         return new ResponseEntity(productService.getProductById(id), HttpStatus.OK);
     }
 
